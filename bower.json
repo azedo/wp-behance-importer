@@ -1,0 +1,34 @@
+{
+  "name": "Behance Importer WP Plugin",
+  "version": "1.0",
+  "authors": [
+    "Eduardo Grigolo <eduardo.grigolo@gmail.com>"
+  ],
+  "description": "A wordpress plugin to easily import behance projects into wordpress.",
+  "main": "behance-importer.php",
+  "moduleType": [
+    "globals"
+  ],
+  "keywords": [
+    "Wordpress",
+    "API",
+    "Behance",
+    "import",
+    "plugin",
+    "plug-in"
+  ],
+  "license": "MIT",
+  "homepage": "eduardogrigolo.com.br",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.3.4",
+    "momentjs": "~2.10.3",
+    "animate.css": "~3.3.0"
+  }
+}
