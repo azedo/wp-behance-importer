@@ -4,10 +4,10 @@
  * The admin-specific functionality of the plugin.
  *
  * @link       http://example.com
- * @since      1.0.0
+ * @since      0.5.0
  *
- * @package    Plugin_Name
- * @subpackage Plugin_Name/admin
+ * @package    Wp_Behance_Importer
+ * @subpackage Wp_Behance_Importer/admin
  */
 
 /**
@@ -16,25 +16,25 @@
  * Defines the plugin name, version, and two examples hooks for how to
  * enqueue the admin-specific stylesheet and JavaScript.
  *
- * @package    Plugin_Name
- * @subpackage Plugin_Name/admin
+ * @package    Wp_Behance_Importer
+ * @subpackage Wp_Behance_Importer/admin
  * @author     Your Name <email@example.com>
  */
-class Plugin_Name_Admin {
+class Wp_Behance_Importer_Admin {
 
 	/**
 	 * The ID of this plugin.
 	 *
-	 * @since    1.0.0
+	 * @since    0.5.0
 	 * @access   private
-	 * @var      string    $plugin_name    The ID of this plugin.
+	 * @var      string    $wp_behance_importer    The ID of this plugin.
 	 */
-	private $plugin_name;
+	private $wp_behance_importer;
 
 	/**
 	 * The version of this plugin.
 	 *
-	 * @since    1.0.0
+	 * @since    0.5.0
 	 * @access   private
 	 * @var      string    $version    The current version of this plugin.
 	 */
@@ -43,13 +43,13 @@ class Plugin_Name_Admin {
 	/**
 	 * Initialize the class and set its properties.
 	 *
-	 * @since    1.0.0
-	 * @param      string    $plugin_name       The name of this plugin.
+	 * @since    0.5.0
+	 * @param      string    $wp_behance_importer       The name of this plugin.
 	 * @param      string    $version    The version of this plugin.
 	 */
-	public function __construct( $plugin_name, $version ) {
+	public function __construct( $wp_behance_importer, $version ) {
 
-		$this->plugin_name = $plugin_name;
+		$this->plugin_name = $wp_behance_importer;
 		$this->version = $version;
 
 	}
@@ -57,7 +57,7 @@ class Plugin_Name_Admin {
 	/**
 	 * Register the stylesheets for the admin area.
 	 *
-	 * @since    1.0.0
+	 * @since    0.5.0
 	 */
 	public function enqueue_styles() {
 
@@ -82,7 +82,7 @@ class Plugin_Name_Admin {
 	/**
 	 * Register the JavaScript for the admin area.
 	 *
-	 * @since    1.0.0
+	 * @since    0.5.0
 	 */
 	public function enqueue_scripts() {
 

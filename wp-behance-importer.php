@@ -8,20 +8,20 @@
  * registers the activation and deactivation functions, and defines a function
  * that starts the plugin.
  *
- * @link              http://example.com
- * @since             1.0.0
- * @package           Plugin_Name
+ * @link              https://github.com/azedo/wp-behance-importer
+ * @since             0.5.0
+ * @package           WP_Behance_Importer
  *
  * @wordpress-plugin
- * Plugin Name:       WordPress Plugin Boilerplate
- * Plugin URI:        http://example.com/plugin-name-uri/
- * Description:       This is a short description of what the plugin does. It's displayed in the WordPress admin area.
- * Version:           1.0.0
- * Author:            Your Name or Your Company
- * Author URI:        http://example.com/
- * License:           GPL-2.0+
- * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
- * Text Domain:       plugin-name
+ * Plugin Name:       WP Behance Importer
+ * Plugin URI:        https://github.com/azedo/wp-behance-importer
+ * Description:       Just a easier way to import your existing projects on Behance to your wordpress portfolio.
+ * Version:           0.5.0
+ * Author:            Eduardo Grigolo
+ * Author URI:        http://eduardogrigolo.com.br/
+ * License:           MIT
+ * License URI:       https://opensource.org/licenses/MIT
+ * Text Domain:       wp-behance-importer
  * Domain Path:       /languages
  */
 
@@ -32,30 +32,30 @@ if ( ! defined( 'WPINC' ) ) {
 
 /**
  * The code that runs during plugin activation.
- * This action is documented in includes/class-plugin-name-activator.php
+ * This action is documented in includes/class-wp-behance-importer-activator.php
  */
-function activate_plugin_name() {
-	require_once plugin_dir_path( __FILE__ ) . 'includes/class-plugin-name-activator.php';
-	Plugin_Name_Activator::activate();
+function activate_wp_behance_importer() {
+	require_once plugin_dir_path( __FILE__ ) . 'includes/class-wp-behance-importer-activator.php';
+	Wp_Behance_Importer_Activator::activate();
 }
 
 /**
  * The code that runs during plugin deactivation.
- * This action is documented in includes/class-plugin-name-deactivator.php
+ * This action is documented in includes/class-wp-behance-importer-deactivator.php
  */
-function deactivate_plugin_name() {
-	require_once plugin_dir_path( __FILE__ ) . 'includes/class-plugin-name-deactivator.php';
-	Plugin_Name_Deactivator::deactivate();
+function deactivate_wp_behance_importer() {
+	require_once plugin_dir_path( __FILE__ ) . 'includes/class-wp-behance-importer-deactivator.php';
+	Wp_Behance_Importer_Deactivator::deactivate();
 }
 
-register_activation_hook( __FILE__, 'activate_plugin_name' );
-register_deactivation_hook( __FILE__, 'deactivate_plugin_name' );
+register_activation_hook( __FILE__, 'activate_wp_behance_importer' );
+register_deactivation_hook( __FILE__, 'deactivate_wp_behance_importer' );
 
 /**
  * The core plugin class that is used to define internationalization,
  * admin-specific hooks, and public-facing site hooks.
  */
-require plugin_dir_path( __FILE__ ) . 'includes/class-plugin-name.php';
+require plugin_dir_path( __FILE__ ) . 'includes/class-wp-behance-importer.php';
 
 /**
  * Begins execution of the plugin.
@@ -66,19 +66,19 @@ require plugin_dir_path( __FILE__ ) . 'includes/class-plugin-name.php';
  *
  * @since    1.0.0
  */
-function run_plugin_name() {
+function run_wp_behance_importer() {
 
-	$plugin = new Plugin_Name();
+	$plugin = new Wp_Behance_Importer();
 	$plugin->run();
 
 }
-run_plugin_name();
+run_wp_behance_importer();
 
 /**
  * Add the plugin to the menu
  */
-add_action('admin_menu', 'behance_importer_plugin_menu');
-function behance_importer_plugin_menu() {
+add_action('admin_menu', 'wp_behance_importer_menu');
+function wp_behance_importer_menu() {
 	add_menu_page('WP Behance Importer', 'WP Behance Importer', 'administrator', 'wp-behance-importer', 'register_wp_behance_importer_admin', 'dashicons-download');
 
 	add_action( 'admin_init', 'register_wp_behance_importer_settings' );
@@ -97,10 +97,10 @@ function register_wp_behance_importer_settings() {
 }
 
 function register_wp_behance_importer_admin() {
-	require 'admin/partials/plugin-name-admin-display.php';
+	require 'admin/partials/wp-behance-importer-admin-display.php';
 }
 
-add_action("wp_ajax_wp_behance_importer_ajax", "wp_behance_importer_ajax");
+add_action('wp_ajax_wp_behance_importer_ajax', 'wp_behance_importer_ajax');
 
 function wp_behance_importer_ajax() {
 
@@ -110,7 +110,7 @@ function wp_behance_importer_ajax() {
 
 	global $user_ID;
 
-	$jdb			= $_POST['jdb'];
+	$jdb = $_POST['jdb'];
 	// $imported = $_POST['imported'];
 
 	for ($i = 0; $i < count($jdb); $i++) { 

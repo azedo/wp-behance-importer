@@ -263,7 +263,7 @@
 					jsonFile		= JSON.parse(localStorage.getItem('json')),
 					jsonDate		= localStorage.getItem('jsonDate');
 
-			$('.nav-tab-wrapper .cache > span').html('<i class="dashicons dashicons-yes" style="padding-top: 5px;"></i>');
+			$('.nav-tab-wrapper .cache > span').html('<i class="dashicons dashicons-yes" style="padding-top: 2px;"></i>');
 			
 			$('#storage-info').html('<h3><i class="dashicons dashicons-yes"></i> Arquivo salvo em cache</h3>' +
 															'<h5>Informações sobre o arquivo:</h5>' +
@@ -278,7 +278,7 @@
 															'</p>');
 			$('#storage-info').css('display', 'block');
 		} else {
-			$('.nav-tab-wrapper .cache > span').html('<i class="dashicons dashicons-no" style="padding-top: 5px;"></i>');
+			$('.nav-tab-wrapper .cache > span').html('<i class="dashicons dashicons-no" style="padding-top: 2px;"></i>');
 
 			$('#storage-info').html('<h3><i class="dashicons dashicons-no-alt"></i> Nenhum arquivo salvo em cache.</h3>'+
 															'<em>Após o primeiro pedido, um arquivo contendo a informação do servidor será salvo no banco de dados.</em>');

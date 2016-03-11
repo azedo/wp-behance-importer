@@ -6,6 +6,23 @@
 	float: left;
 }
 
+#message {
+	margin: 15px 0;
+	background: #fff;
+	border-left: 4px solid #dc3232;
+	-webkit-box-shadow: 0 1px 1px 0 rgba(0,0,0,.1);
+	box-shadow: 0 1px 1px 0 rgba(0,0,0,.1);
+	padding: 1px 12px;
+}
+
+.input-error {
+	border: 1px solid #dc3232!important;
+}
+
+.required-field {
+	color: #dc3232;
+}
+
 .form-table td {
 	vertical-align: top;
 }
@@ -22,14 +39,14 @@
 }
 
 small {
-  color: #777777;
-  display: block;
-  font-size: 12px;
-  line-height: 1.4em;
-  font-style: normal;
-  margin: 3px 0 0 !important;
-  padding: 0 !important;
-  font-weight: normal;
+	color: #777777;
+	display: block;
+	font-size: 12px;
+	line-height: 1.4em;
+	font-style: normal;
+	margin: 3px 0 0 !important;
+	padding: 0 !important;
+	font-weight: normal;
 }
 
 #config-controls,

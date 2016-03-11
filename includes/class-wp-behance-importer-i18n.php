@@ -6,11 +6,11 @@
  * Loads and defines the internationalization files for this plugin
  * so that it is ready for translation.
  *
- * @link       http://example.com
- * @since      1.0.0
+ * @link       https://github.com/azedo/wp-behance-importer
+ * @since      0.5.0
  *
- * @package    Plugin_Name
- * @subpackage Plugin_Name/includes
+ * @package    Wp_Behance_Importer
+ * @subpackage Wp_Behance_Importer/includes
  */
 
 /**
@@ -19,17 +19,17 @@
  * Loads and defines the internationalization files for this plugin
  * so that it is ready for translation.
  *
- * @since      1.0.0
- * @package    Plugin_Name
- * @subpackage Plugin_Name/includes
+ * @since      0.5.0
+ * @package    Wp_Behance_Importer
+ * @subpackage Wp_Behance_Importer/includes
  * @author     Your Name <email@example.com>
  */
-class Plugin_Name_i18n {
+class Wp_Behance_Importer_i18n {
 
 	/**
 	 * The domain specified for this plugin.
 	 *
-	 * @since    1.0.0
+	 * @since    0.5.0
 	 * @access   private
 	 * @var      string    $domain    The domain identifier for this plugin.
 	 */
@@ -38,7 +38,7 @@ class Plugin_Name_i18n {
 	/**
 	 * Load the plugin text domain for translation.
 	 *
-	 * @since    1.0.0
+	 * @since    0.5.0
 	 */
 	public function load_plugin_textdomain() {
 
@@ -53,7 +53,7 @@ class Plugin_Name_i18n {
 	/**
 	 * Set the domain equal to that of the specified domain.
 	 *
-	 * @since    1.0.0
+	 * @since    0.5.0
 	 * @param    string    $domain    The domain that represents the locale of this plugin.
 	 */
 	public function set_domain( $domain ) {

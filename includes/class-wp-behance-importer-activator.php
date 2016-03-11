@@ -3,11 +3,11 @@
 /**
  * Fired during plugin activation
  *
- * @link       http://example.com
- * @since      1.0.0
- *
- * @package    Plugin_Name
- * @subpackage Plugin_Name/includes
+ * @link       https://github.com/azedo/wp-behance-importer
+ * @since      0.5.0
+ * 
+ * @package    WP_Behance_Importer
+ * @subpackage WP_Behance_Importer/includes
  */
 
 /**
@@ -16,11 +16,11 @@
  * This class defines all code necessary to run during the plugin's activation.
  *
  * @since      1.0.0
- * @package    Plugin_Name
- * @subpackage Plugin_Name/includes
- * @author     Your Name <email@example.com>
+ * @package    WP_Behance_Importer
+ * @subpackage WP_Behance_Importer/includes
+ * @author     Eduardo Grigolo <contato@eduardogrigolo.com.br>
  */
-class Plugin_Name_Activator {
+class Wp_Behance_Importer_Activator {
 
 	/**
 	 * Short Description. (use period)
