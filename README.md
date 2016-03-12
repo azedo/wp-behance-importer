@@ -32,4 +32,4 @@ Then you need to select the projects you want to import e voi-lá! After a few s
 - Add an option to choose the custom post type of the portfólio
 - Make a search field to search projects by name or tag
 - Give the user an option to import not just images
-
+- Finish the Help section

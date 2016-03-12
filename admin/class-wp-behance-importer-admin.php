@@ -101,7 +101,34 @@ class Wp_Behance_Importer_Admin {
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/wp-behance-importer-admin.js', array( 'jquery' ), $this->version, true );
 		wp_enqueue_script( $this->plugin_name . '-momentjs', plugins_url( 'bower_components/momentjs/min/moment.min.js', dirname(__FILE__) ), array( 'jquery' ), $this->version, true );
 
-		wp_localize_script( $this->plugin_name, 'myAjax', array( 'ajaxurl' => admin_url( 'admin-ajax.php' )));
+		// Localize the script
+		$translation_array = array(
+			'ajax', array( 'url' => admin_url( 'admin-ajax.php' )),
+			'string_0' => __( 'Wait...', 'wp-behance-importer' ),
+			'string_1' => __( 'Choose the date', 'wp-behance-importer' ),
+			'string_2' => __( 'File saved on cache', 'wp-behance-importer' ),
+			'string_3' => __( 'Info about the file', 'wp-behance-importer' ),
+			'string_4' => __( 'Date that was saved', 'wp-behance-importer' ),
+			'string_5' => __( 'Size of file', 'wp-behance-importer' ),
+			'string_6' => __( 'Title of the last project added to Behance', 'wp-behance-importer' ),
+			'string_7' => __( 'Clear cache', 'wp-behance-importer' ),
+			'string_8' => __( 'After the file is deletd, it will be necessary make another request to the server.', 'wp-behance-importer' ),
+			'string_9' => __( 'No file saved on cache', 'wp-behance-importer' ),
+			'string_10' => __( 'After the first request, a file with the projects information will be saved on the database.', 'wp-behance-importer' ),
+			'string_11' => __( 'Published on', 'wp-behance-importer' ),
+			'string_12' => __( 'see project', 'wp-behance-importer' ),
+			'string_13' => __( 'Nothing found.', 'wp-behance-importer' ),
+			'string_14' => __( 'Reset', 'wp-behance-importer' ),
+			'string_15' => __( 'Import', 'wp-behance-importer' ),
+			'string_16' => __( 'Total of projects', 'wp-behance-importer' ),
+			'string_17' => __( 'Select all', 'wp-behance-importer' ),
+			'string_18' => __( 'You need to put an API key!', 'wp-behance-importer' ),
+			'string_19' => __( 'You need to put an username!', 'wp-behance-importer' ),
+			'string_20' => __( 'Save', 'wp-behance-importer' ),
+			'string_21' => __( 'Sending...', 'wp-behance-importer' ),
+		);
+		wp_localize_script( $this->plugin_name, 'text', $translation_array );
+		// <script> alert( object_name.some_string ); </script>
 	}
 
 }

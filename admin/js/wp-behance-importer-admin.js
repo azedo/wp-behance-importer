@@ -73,7 +73,7 @@
 		$('#storage-info').on('click', '#clear-cache', function(e) {
 			e.preventDefault();
 
-			$(this).attr('disabled', true).text('Aguarde...');
+			$(this).attr('disabled', true).text(text.string_0);
 			
 			localStorage.clear();
 			
@@ -93,7 +93,7 @@
 				/// Make the clicked button active
 				$($this)
 					.addClass('active')
-					.html('Escolha a data!')
+					.html(text.string_1)
 					.next()
 					.css('font-weight', 'bold')
 				/// Disable the other buttons
@@ -204,10 +204,10 @@
 					return xhr;
 				},
 				type: 'POST',
-				url: myAjax.ajaxurl,
+				url: ajax.url,
 				data: data,
 				beforeSend: function() {
-					$this.text('Aguarde').attr('disabled', true);
+					$this.text(text.string_0).attr('disabled', true);
 					$('#reset-results').attr('disabled', true);
 
 					$('#import-info').slideDown('fast', function() {
@@ -230,7 +230,7 @@
 			});
 			
 			// Use for debug
-			// $.post(myAjax.ajaxurl, data, function(response) {
+			// $.post(ajax.url, data, function(response) {
 			// 	console.log('Got this from the server: ' + response);
 			// });
 		});
@@ -265,23 +265,23 @@
 
 			$('.nav-tab-wrapper .cache > span').html('<i class="dashicons dashicons-yes" style="padding-top: 2px;"></i>');
 			
-			$('#storage-info').html('<h3><i class="dashicons dashicons-yes"></i> Arquivo salvo em cache</h3>' +
-															'<h5>Informações sobre o arquivo:</h5>' +
+			$('#storage-info').html('<h3><i class="dashicons dashicons-yes"></i> ' + text.string_2 + '</h3>' +
+															'<h5>' + text.string_3 + ':</h5>' +
 															'<ul>' +
-																'<li>Data em que foi salvo: <span>' + jsonDate + '</span></li>' +
-																'<li>Tamanho do arquivo: <span>' + fileSize + '</span></li>' +
-																'<li>Título do último trabalho inserido no behance: ' +
+																'<li>' + text.string_4 + ': <span>' + jsonDate + '</span></li>' +
+																'<li>' + text.string_5 + ': <span>' + fileSize + '</span></li>' +
+																'<li>' + text.string_6 + ': ' +
 																'<span>' + jsonFile[0].name + '</span></li>' +
 															'</ul>' +
 															'<p>' +
-																'<a href="#" id="clear-cache" class="button button-danger">Apagar cache</a> - <em>Após apagado, será necessário fazer um novo pedido para o servidor.</em>' +
+																'<a href="#" id="clear-cache" class="button button-danger">' + text.string_7 + '</a> - <em>' + text.string_8 + '</em>' +
 															'</p>');
 			$('#storage-info').css('display', 'block');
 		} else {
 			$('.nav-tab-wrapper .cache > span').html('<i class="dashicons dashicons-no" style="padding-top: 2px;"></i>');
 
-			$('#storage-info').html('<h3><i class="dashicons dashicons-no-alt"></i> Nenhum arquivo salvo em cache.</h3>'+
-															'<em>Após o primeiro pedido, um arquivo contendo a informação do servidor será salvo no banco de dados.</em>');
+			$('#storage-info').html('<h3><i class="dashicons dashicons-no-alt"></i>' + text.string_9 +
+															'<em>' + text.string_10 +'</em>');
 			$('#storage-info').css('display', 'block');
 		}
 	}
@@ -352,10 +352,10 @@
 											"<img src='" + img + "'>" +
 											"<div class='result-info'>" +
 												"<h3>" + name + "</h3>" +
-												"<span class='published_on'>Publicado em: " + day + "/" + month + "/" + year + " às " + hours + ":" + minutes + ":" + seconds + "</span>" +
+												"<span class='published_on'>" + text.string_11 + ": " + day + "/" + month + "/" + year + " às " + hours + ":" + minutes + ":" + seconds + "</span>" +
 												"<p style='margin-bottom: 0;'>" +
 													"<a href='" + url + "' target='_blank'>" +
-														"<span class='label label-primary'>ver projeto <i class='fa fa-external-link'></i></span>" +
+														"<span class='label label-primary'>" + text.string_12 + " <i class='fa fa-external-link'></i></span>" +
 													"</a>" +
 												"</p>" +
 											"</div>" +
@@ -399,10 +399,10 @@
 												"<img src='" + img + "'>" +
 												"<div class='result-info'>" +
 													"<h3>" + name + "</h3>" +
-													"<span class='published_on'>Publicado em: " + day + "/" + month + "/" + year + " às " + hours + ":" + minutes + ":" + seconds + "</span>" +
+													"<span class='published_on'>" + text.string_11 + ": " + day + "/" + month + "/" + year + " às " + hours + ":" + minutes + ":" + seconds + "</span>" +
 													"<p style='margin-bottom: 0;'>" +
 														"<a href='" + url + "' target='_blank'>" +
-															"<span class='label label-primary'>ver projeto <i class='fa fa-external-link'></i></span>" +
+															"<span class='label label-primary'>" + text.string_12 + " <i class='fa fa-external-link'></i></span>" +
 														"</a>" +
 													"</p>" +
 												"</div>" +
@@ -415,9 +415,9 @@
 		
 		if (hideCount === 0) {
 			$('#results')
-				.append('<h3 class="text-center animated fadeIn">Nenhum resultado encontrado.</h3>')
+				.append('<h3 class="text-center animated fadeIn">' + text.string_13 + '</h3>')
 				.append('<div class="animated fadeIn text-center" style="margin-top: 20px;">' +
-									'<a href="#" id="reset-results" class="button">Resetar</a>' +
+									'<a href="#" id="reset-results" class="button">' + text.string_14 + '</a>' +
 								'</div>');
 		} else {
 			/// Show the controls to import or restart the query
@@ -425,31 +425,31 @@
 			$('#results')
 				.prepend('<form id="results-form" method="post" action="save-results.php"><div class="animated fadeIn">' +
 									'<div id="import-controls">' +
-										'<a href="#" id="import-results" class="button-primary">Importar</a>' +
-										'<a href="#" id="reset-results" class="button">Resetar</a>' +
+										'<a href="#" id="import-results" class="button-primary">' + text.string_15 + '</a>' +
+										'<a href="#" id="reset-results" class="button">' + text.string_14 + '</a>' +
 									'</div>' +
 								'</div>' +
 								'<div id="info" class="animated fadeIn group">' +
 									'<div id="result-total">' +
-										'Total de trabalhos: <b>' + hideCount + '</b>' +
+										text.string_16 + ': <b>' + hideCount + '</b>' +
 									'</div>' +
 									'<div id="check-all">' +
-									'Selecionar todos: <input type="checkbox" name="check-all" />' +
+										text.string_17 + ': <input type="checkbox" name="check-all" />' +
 									'</div>' +
 								'</div>');
 			$('#results')
 				.append('</form><div id="info" class="animated fadeIn group">' +
 									'<div id="result-total">' +
-										'Total de trabalhos: <b>' + hideCount + '</b>' +
+										text.string_16 + ': <b>' + hideCount + '</b>' +
 									'</div>' +
 									'<div id="check-all">' +
-										'Selecionar todos: <input type="checkbox" name="check-all" />' +
+										text.string_17 + ': <input type="checkbox" name="check-all" />' +
 									'</div>' +
 								'</div>')
 				.append('<div class="animated fadeIn" style="margin-top: 20px;">' +
 									'<div id="import-controls">' +
-										'<a href="#" id="import-results" class="button-primary">Importar</a>' +
-										'<a href="#" id="reset-results" class="button">Resetar</a>' +
+										'<a href="#" id="import-results" class="button-primary">' + text.string_15 + '</a>' +
+										'<a href="#" id="reset-results" class="button">' + text.string_14 + '</a>' +
 									'</div>' +
 								'</div>');
 
@@ -461,13 +461,13 @@
 	function retrievePages(apiKey, page, perPage, results, button, btnId, timestamp) {
 		// Check if there's data in the localStorage
 		if (localStorage.getItem('json')) {
-			console.log('Já estava salvo! Nois!');
+			console.log("It's already saved on db.");
 			
 			var json = JSON.parse(localStorage.getItem('json'));
 			/// Go to the showOnPage function to show the saved results
 			showOnPage(json, button, btnId, timestamp);
 		} else {
-			console.log('Ainda não tava salvo! Vou salvar depois de mostrar tudo! NOVAX!');
+			console.log("It wasn't saved yet, it'll show after is all loaded.");
 			var nextPage = page + 1;
 			
 			/// Do the first ajax request
@@ -483,7 +483,7 @@
 				if (newData.projects.length > 0) {
 					retrievePages(apiKey, nextPage, perPage, newResults, button, btnId, timestamp);
 				} else {
-					console.log('Última página!');
+					console.log('Last page!');
 
 					localStorage.setItem('json', JSON.stringify(newResults));
 
@@ -522,7 +522,7 @@
 			/// Make the clicked button active
 			$(button)
 				.addClass('active')
-				.html('Aguarde!')
+				.html(text.string_0)
 				.next()
 				.css('font-weight', 'bold');
 			/// Disable the other buttons
@@ -553,7 +553,7 @@
 				beforeSend: function() {
 					$(button)
 						.addClass('active')
-						.html('Aguarde!')
+						.html(text.string_0)
 						.next()
 						.css('font-weight', 'bold');
 
@@ -601,19 +601,19 @@
 			console.log('Antes de enviar!');
 
 			if(!$('input[name="behance_api_key"]').val() && $('input[name="behance_user"]').val()) {
-				$('input[name="behance_api_key"]').css('border', '1px solid red').next().text('Você precisa colocar uma chave API!');
+				$('input[name="behance_api_key"]').css('border', '1px solid red').next().text(text.string_18);
 				$('input[name="behance_user"]').css('border', '1px solid #ddd').next().text('');
 			} else if (!$('input[name="behance_user"]').val() && $('input[name="behance_api_key"]').val()) {
-				$('input[name="behance_user"]').css('border', '1px solid red').next().html('Você precisa colocar um nome de usuário!');
+				$('input[name="behance_user"]').css('border', '1px solid red').next().html(text.string_19);
 				$('input[name="behance_api_key"]').css('border', '1px solid #ddd').next().text('');
 			} else if (!$('input[name="behance_user"]').val() || !$('input[name="behance_api_key"]').val()) {
-				$('input[name="behance_user"]').css('border', '1px solid red').next().text('Você precisa colocar um nome de usuário!');
-				$('input[name="behance_api_key"]').css('border', '1px solid red').next().text('Você precisa colocar uma chave API!');
+				$('input[name="behance_user"]').css('border', '1px solid red').next().text(text.string_19);
+				$('input[name="behance_api_key"]').css('border', '1px solid red').next().text(text.string_18);
 			} else {
-				console.log('Enviando...');
+				console.log(text.string_21);
 
 				$('#settings-tab .submit').append('<span style="position: relative;"><img src="/wp-admin/images/spinner.gif" alt="" class="slider-spinner general-spinner" style="position: absolute; top: 4px; left: 5px;"></span>');
-				$('#settings-tab .submit input').val('Enviando...').addClass('active').attr('disabled', true);
+				$('#settings-tab .submit input').val(text.string_21).addClass('active').attr('disabled', true);
 
 				$('input[name="behance_api_key"], input[name="behance_user"]').attr('style', '').css({
 					border: 'border: 1px solid #ddd',
@@ -629,7 +629,7 @@
 						console.log(errorThrown);
 					}).success( function() {
 						$('#settings-tab .submit').find('span').detach();
-						$('#settings-tab .submit input').val('Salvar Alterações').removeClass('active').attr('disabled', false);
+						$('#settings-tab .submit input').val(text.string_20).removeClass('active').attr('disabled', false);
 						console.log('Enviado!!');
 					});
 			}

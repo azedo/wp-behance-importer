@@ -35,7 +35,9 @@
 	</h2>
 
 	<!-- Configuration warning -->
-	<?php if (get_option('behance_api_key') === '' || empty(get_option('behance_api_key')) || get_option('behance_user') === '' || empty(get_option('behance_user'))) { $notSetYet = true; ?>
+	<?php
+		$notSetYet = false;
+		if (get_option('behance_api_key') === '' || empty(get_option('behance_api_key')) || get_option('behance_user') === '' || empty(get_option('behance_user'))) { $notSetYet = true; ?>
 		<div id="message" style="margin-top: 15px;">
 			<p><?php _e('You need to configure the plugin. Go to <a href="#" class="error-settings" data-div-name="settings-tab">settings</a> and fill the necessary fields.', 'wp-behance-importer'); ?></p>
 		</div>
