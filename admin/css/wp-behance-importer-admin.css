@@ -103,6 +103,10 @@ small {
 #results .result:hover .add:before {
 	background: white;
 }
+#results .result label {
+	height: 90px;
+	display: block;
+}
 #results .result img {
 	display: block;
 	float: left;

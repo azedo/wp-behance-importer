@@ -226,6 +226,8 @@
 					$('#import-info').slideUp('fast', function() {
 						$(this).find('.import-names').html(' ');
 					});
+
+					console.log('Got this from the server: ' + data);
 				}
 			});
 			
@@ -348,18 +350,21 @@
 					console.log(typeof id);
 
 					$('#results')
+						.delay(1500)
 						.append("<div id='" + id + "' class='animated " + animation + " result group'>" +
-											"<img src='" + img + "'>" +
-											"<div class='result-info'>" +
-												"<h3>" + name + "</h3>" +
-												"<span class='published_on'>" + text.string_11 + ": " + day + "/" + month + "/" + year + " às " + hours + ":" + minutes + ":" + seconds + "</span>" +
-												"<p style='margin-bottom: 0;'>" +
-													"<a href='" + url + "' target='_blank'>" +
-														"<span class='label label-primary'>" + text.string_12 + " <i class='fa fa-external-link'></i></span>" +
-													"</a>" +
-												"</p>" +
-											"</div>" +
-											"<input type='checkbox' name='addProject' class='add' value='" + id + "' />" +
+											"<label for='" + id + "_l'>" +
+												"<img src='" + img + "'>" +
+												"<div class='result-info'>" +
+													"<h3>" + name + "</h3>" +
+													"<span class='published_on'>" + wpbi.string_11 + ": " + day + "/" + month + "/" + year + " às " + hours + ":" + minutes + ":" + seconds + "</span>" +
+													"<p style='margin-bottom: 0;'>" +
+														"<a href='" + url + "' target='_blank'>" +
+															"<span class='label label-primary'>" + wpbi.string_12 + " <i class='fa fa-external-link'></i></span>" +
+														"</a>" +
+													"</p>" +
+												"</div>" +
+												"<input type='checkbox' name='addProject' id='" + id + "_l' class='add' value='" + id + "' />" +
+											"</label>" +
 										"</div>");
 				}
 			}
@@ -434,7 +439,7 @@
 										wpbi.string_16 + ': <b>' + hideCount + '</b>' +
 									'</div>' +
 									'<div id="check-all">' +
-										text.string_17 + ': <input type="checkbox" name="check-all" />' +
+										'<label for="wpbi_selectAll">' + wpbi.string_17 + ': <input type="checkbox" name="check-all" id="wpbi_selectAll" />' +
 									'</div>' +
 								'</div>');
 			$('#results')
