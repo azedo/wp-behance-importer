@@ -103,7 +103,7 @@ class Wp_Behance_Importer_Admin {
 
 		// Localize the script
 		$translation_array = array(
-			'ajax', array( 'url' => admin_url( 'admin-ajax.php' )),
+			'wpbiAjax' => admin_url( 'admin-ajax.php' ),
 			'string_0' => __( 'Wait...', 'wp-behance-importer' ),
 			'string_1' => __( 'Choose the date', 'wp-behance-importer' ),
 			'string_2' => __( 'File saved on cache', 'wp-behance-importer' ),
@@ -126,8 +126,9 @@ class Wp_Behance_Importer_Admin {
 			'string_19' => __( 'You need to put an username!', 'wp-behance-importer' ),
 			'string_20' => __( 'Save', 'wp-behance-importer' ),
 			'string_21' => __( 'Sending...', 'wp-behance-importer' ),
+			'string_22' => __( 'Done!', 'wp-behance-importer' )
 		);
-		wp_localize_script( $this->plugin_name, 'text', $translation_array );
+		wp_localize_script( $this->plugin_name, 'wpbi', $translation_array );
 		// <script> alert( object_name.some_string ); </script>
 	}
 

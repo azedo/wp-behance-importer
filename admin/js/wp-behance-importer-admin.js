@@ -73,7 +73,7 @@
 		$('#storage-info').on('click', '#clear-cache', function(e) {
 			e.preventDefault();
 
-			$(this).attr('disabled', true).text(text.string_0);
+			$(this).attr('disabled', true).text(wpbi.string_0);
 			
 			localStorage.clear();
 			
@@ -93,7 +93,7 @@
 				/// Make the clicked button active
 				$($this)
 					.addClass('active')
-					.html(text.string_1)
+					.html(wpbi.string_1)
 					.next()
 					.css('font-weight', 'bold')
 				/// Disable the other buttons
@@ -182,32 +182,32 @@
 					};
 
 			$.ajax({
-				xhr: function()
-				{
-					var xhr = new window.XMLHttpRequest();
-					//Upload progress
-					xhr.upload.addEventListener("progress", function(evt){
-						if (evt.lengthComputable) {
-							var percentComplete = evt.loaded / evt.total;
-							//Do something with upload progress
-							console.log(percentComplete);
-						}
-					}, false);
-					//Download progress
-					xhr.addEventListener("progress", function(evt){
-						if (evt.lengthComputable) {
-							var percentComplete = evt.loaded / evt.total;
-							//Do something with download progress
-							console.log(percentComplete);
-						}
-					}, false);
-					return xhr;
-				},
+				// xhr: function()
+				// {
+				// 	var xhr = new window.XMLHttpRequest();
+				// 	//Upload progress
+				// 	xhr.upload.addEventListener("progress", function(evt){
+				// 		if (evt.lengthComputable) {
+				// 			var percentComplete = evt.loaded / evt.total;
+				// 			//Do something with upload progress
+				// 			console.log(percentComplete);
+				// 		}
+				// 	}, false);
+				// 	//Download progress
+				// 	xhr.addEventListener("progress", function(evt){
+				// 		if (evt.lengthComputable) {
+				// 			var percentComplete = evt.loaded / evt.total;
+				// 			//Do something with download progress
+				// 			console.log(percentComplete);
+				// 		}
+				// 	}, false);
+				// 	return xhr;
+				// },
 				type: 'POST',
-				url: ajax.url,
+				url: wpbi.wpbiAjax,
 				data: data,
 				beforeSend: function() {
-					$this.text(text.string_0).attr('disabled', true);
+					$this.text(wpbi.string_0).attr('disabled', true);
 					$('#reset-results').attr('disabled', true);
 
 					$('#import-info').slideDown('fast', function() {
@@ -265,23 +265,23 @@
 
 			$('.nav-tab-wrapper .cache > span').html('<i class="dashicons dashicons-yes" style="padding-top: 2px;"></i>');
 			
-			$('#storage-info').html('<h3><i class="dashicons dashicons-yes"></i> ' + text.string_2 + '</h3>' +
-															'<h5>' + text.string_3 + ':</h5>' +
+			$('#storage-info').html('<h3><i class="dashicons dashicons-yes"></i> ' + wpbi.string_2 + '</h3>' +
+															'<h5>' + wpbi.string_3 + ':</h5>' +
 															'<ul>' +
-																'<li>' + text.string_4 + ': <span>' + jsonDate + '</span></li>' +
-																'<li>' + text.string_5 + ': <span>' + fileSize + '</span></li>' +
-																'<li>' + text.string_6 + ': ' +
+																'<li>' + wpbi.string_4 + ': <span>' + jsonDate + '</span></li>' +
+																'<li>' + wpbi.string_5 + ': <span>' + fileSize + '</span></li>' +
+																'<li>' + wpbi.string_6 + ': ' +
 																'<span>' + jsonFile[0].name + '</span></li>' +
 															'</ul>' +
 															'<p>' +
-																'<a href="#" id="clear-cache" class="button button-danger">' + text.string_7 + '</a> - <em>' + text.string_8 + '</em>' +
+																'<a href="#" id="clear-cache" class="button button-danger">' + wpbi.string_7 + '</a> - <em>' + wpbi.string_8 + '</em>' +
 															'</p>');
 			$('#storage-info').css('display', 'block');
 		} else {
 			$('.nav-tab-wrapper .cache > span').html('<i class="dashicons dashicons-no" style="padding-top: 2px;"></i>');
 
-			$('#storage-info').html('<h3><i class="dashicons dashicons-no-alt"></i>' + text.string_9 +
-															'<em>' + text.string_10 +'</em>');
+			$('#storage-info').html('<h3><i class="dashicons dashicons-no-alt"></i>' + wpbi.string_9 +
+															'<em>' + wpbi.string_10 +'</em>');
 			$('#storage-info').css('display', 'block');
 		}
 	}
@@ -313,7 +313,7 @@
 	// Show results on page
 	function showOnPage(dataArray, button, btnId, timestamp) {
 		// Change the text in the button
-		$(button).text('Pronto!');
+		$(button).text(wpbi.string_22);
 		
 		var hideCount	=	0;
 		
@@ -399,10 +399,10 @@
 												"<img src='" + img + "'>" +
 												"<div class='result-info'>" +
 													"<h3>" + name + "</h3>" +
-													"<span class='published_on'>" + text.string_11 + ": " + day + "/" + month + "/" + year + " às " + hours + ":" + minutes + ":" + seconds + "</span>" +
+													"<span class='published_on'>" + wpbi.string_11 + ": " + day + "/" + month + "/" + year + " às " + hours + ":" + minutes + ":" + seconds + "</span>" +
 													"<p style='margin-bottom: 0;'>" +
 														"<a href='" + url + "' target='_blank'>" +
-															"<span class='label label-primary'>" + text.string_12 + " <i class='fa fa-external-link'></i></span>" +
+															"<span class='label label-primary'>" + wpbi.string_12 + " <i class='fa fa-external-link'></i></span>" +
 														"</a>" +
 													"</p>" +
 												"</div>" +
@@ -415,9 +415,9 @@
 		
 		if (hideCount === 0) {
 			$('#results')
-				.append('<h3 class="text-center animated fadeIn">' + text.string_13 + '</h3>')
+				.append('<h3 class="text-center animated fadeIn">' + wpbi.string_13 + '</h3>')
 				.append('<div class="animated fadeIn text-center" style="margin-top: 20px;">' +
-									'<a href="#" id="reset-results" class="button">' + text.string_14 + '</a>' +
+									'<a href="#" id="reset-results" class="button">' + wpbi.string_14 + '</a>' +
 								'</div>');
 		} else {
 			/// Show the controls to import or restart the query
@@ -425,13 +425,13 @@
 			$('#results')
 				.prepend('<form id="results-form" method="post" action="save-results.php"><div class="animated fadeIn">' +
 									'<div id="import-controls">' +
-										'<a href="#" id="import-results" class="button-primary">' + text.string_15 + '</a>' +
-										'<a href="#" id="reset-results" class="button">' + text.string_14 + '</a>' +
+										'<a href="#" id="import-results" class="button-primary">' + wpbi.string_15 + '</a>' +
+										'<a href="#" id="reset-results" class="button">' + wpbi.string_14 + '</a>' +
 									'</div>' +
 								'</div>' +
 								'<div id="info" class="animated fadeIn group">' +
 									'<div id="result-total">' +
-										text.string_16 + ': <b>' + hideCount + '</b>' +
+										wpbi.string_16 + ': <b>' + hideCount + '</b>' +
 									'</div>' +
 									'<div id="check-all">' +
 										text.string_17 + ': <input type="checkbox" name="check-all" />' +
@@ -440,16 +440,16 @@
 			$('#results')
 				.append('</form><div id="info" class="animated fadeIn group">' +
 									'<div id="result-total">' +
-										text.string_16 + ': <b>' + hideCount + '</b>' +
+										wpbi.string_16 + ': <b>' + hideCount + '</b>' +
 									'</div>' +
 									'<div id="check-all">' +
-										text.string_17 + ': <input type="checkbox" name="check-all" />' +
+										wpbi.string_17 + ': <input type="checkbox" name="check-all" />' +
 									'</div>' +
 								'</div>')
 				.append('<div class="animated fadeIn" style="margin-top: 20px;">' +
 									'<div id="import-controls">' +
-										'<a href="#" id="import-results" class="button-primary">' + text.string_15 + '</a>' +
-										'<a href="#" id="reset-results" class="button">' + text.string_14 + '</a>' +
+										'<a href="#" id="import-results" class="button-primary">' + wpbi.string_15 + '</a>' +
+										'<a href="#" id="reset-results" class="button">' + wpbi.string_14 + '</a>' +
 									'</div>' +
 								'</div>');
 
@@ -522,7 +522,7 @@
 			/// Make the clicked button active
 			$(button)
 				.addClass('active')
-				.html(text.string_0)
+				.html(wpbi.string_0)
 				.next()
 				.css('font-weight', 'bold');
 			/// Disable the other buttons
@@ -545,7 +545,7 @@
 
 			/// Do the first ajax request
 			$.ajax({
-				url: url,
+				url: wpbi.wpbiAjax,
 				data:{
 					'action':'do_ajax'
 				},
@@ -553,7 +553,7 @@
 				beforeSend: function() {
 					$(button)
 						.addClass('active')
-						.html(text.string_0)
+						.html(wpbi.string_0)
 						.next()
 						.css('font-weight', 'bold');
 
@@ -601,19 +601,19 @@
 			console.log('Antes de enviar!');
 
 			if(!$('input[name="behance_api_key"]').val() && $('input[name="behance_user"]').val()) {
-				$('input[name="behance_api_key"]').css('border', '1px solid red').next().text(text.string_18);
+				$('input[name="behance_api_key"]').css('border', '1px solid red').next().text(wpbi.string_18);
 				$('input[name="behance_user"]').css('border', '1px solid #ddd').next().text('');
 			} else if (!$('input[name="behance_user"]').val() && $('input[name="behance_api_key"]').val()) {
-				$('input[name="behance_user"]').css('border', '1px solid red').next().html(text.string_19);
+				$('input[name="behance_user"]').css('border', '1px solid red').next().html(wpbi.string_19);
 				$('input[name="behance_api_key"]').css('border', '1px solid #ddd').next().text('');
 			} else if (!$('input[name="behance_user"]').val() || !$('input[name="behance_api_key"]').val()) {
-				$('input[name="behance_user"]').css('border', '1px solid red').next().text(text.string_19);
-				$('input[name="behance_api_key"]').css('border', '1px solid red').next().text(text.string_18);
+				$('input[name="behance_user"]').css('border', '1px solid red').next().text(wpbi.string_19);
+				$('input[name="behance_api_key"]').css('border', '1px solid red').next().text(wpbi.string_18);
 			} else {
-				console.log(text.string_21);
+				console.log(wpbi.string_21);
 
 				$('#settings-tab .submit').append('<span style="position: relative;"><img src="/wp-admin/images/spinner.gif" alt="" class="slider-spinner general-spinner" style="position: absolute; top: 4px; left: 5px;"></span>');
-				$('#settings-tab .submit input').val(text.string_21).addClass('active').attr('disabled', true);
+				$('#settings-tab .submit input').val(wpbi.string_21).addClass('active').attr('disabled', true);
 
 				$('input[name="behance_api_key"], input[name="behance_user"]').attr('style', '').css({
 					border: 'border: 1px solid #ddd',
@@ -629,7 +629,7 @@
 						console.log(errorThrown);
 					}).success( function() {
 						$('#settings-tab .submit').find('span').detach();
-						$('#settings-tab .submit input').val(text.string_20).removeClass('active').attr('disabled', false);
+						$('#settings-tab .submit input').val(wpbi.string_20).removeClass('active').attr('disabled', false);
 						console.log('Enviado!!');
 					});
 			}
