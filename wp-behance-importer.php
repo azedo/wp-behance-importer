@@ -15,7 +15,7 @@
  * @wordpress-plugin
  * Plugin Name:       WP Behance Importer
  * Plugin URI:        https://github.com/azedo/wp-behance-importer
- * Description:       Just a easier way to import your existing projects on Behance to your wordpress portfolio.
+ * Description:       Just an easier way to import your existing projects on Behance to your wordpress portfolio.
  * Version:           0.5.0
  * Author:            Eduardo Grigolo
  * Author URI:        http://eduardogrigolo.com.br/
@@ -93,6 +93,7 @@ function register_wp_behance_importer_settings() {
 	register_setting( 'wp-behance-importer-settings-group', 'behance_results_per_page' );
 	register_setting( 'wp-behance-importer-settings-group', 'behance_user' );
 	register_setting( 'wp-behance-importer-settings-group', 'behance_json' );
+	register_setting( 'wp-behance-importer-settings-group', 'wpbi_post_type' );
 	// register_setting( 'wp-behance-importer-settings-group', 'behance_imported' );
 }
 
@@ -111,39 +112,52 @@ function wp_behance_importer_ajax() {
 	global $user_ID;
 
 	$jdb = $_POST['jdb'];
+	$wpbi_post_type = get_option('wpbi_post_type');
 	// $imported = $_POST['imported'];
 
-	for ($i = 0; $i < count($jdb); $i++) { 
-		// TODO: check if the id is not saved already in the database or check if the title already exists then kill the loop
-		$new_post = array(
-			'post_title' => $jdb[$i]['name'],
-			'post_content' => '',
-			'post_status' => 'draft',
-			'post_date' => date('Y-m-d H:i:s'),
-			'post_author' => $user_ID,
-			'post_type' => 'tw_portfolio',
-			'post_category' => array(0)
-		);
-		$post_id = wp_insert_post($new_post);
-
-		// TODO: Create the ACF subfields for the flexible content
-
+	for ($i = 0; $i < count($jdb); $i++) {
+		// Prepare to get the information from the selected project
 		$jsonurl = wp_remote_get("https://www.behance.net/v2/projects/" . $jdb[$i]['id'] . "?api_key=" . $_POST['api']);
 		$json = wp_remote_retrieve_body($jsonurl);
 		$jContents = json_decode($json, true);
 
-		$field_key = "field_54484c2363681";
-		$value = get_field($field_key);
+		$project_name = $jContents['project']['name'];
+
+		// @todo Check if the id is not saved already in the database or check if the title already exists then kill the loop
+		$new_post = array(
+			'post_title' => $jdb[$i]['name'],
+			'post_content' => $jContents['project']['description'],
+			'post_status' => 'draft',
+			'post_date' => date('Y-m-d H:i:s'),
+			'post_author' => $user_ID,
+			'post_type' => $wpbi_post_type,
+			'post_category' => array(0)
+		);
+		$post_id = wp_insert_post($new_post);
+
+		// @todo Create options on settings page to choose what kind of file we want to import
+
+		// $field_key = "field_54484c2363681";
+		// $value = get_field($field_key);
+
+		$modules_index = 0;
 
 		foreach ($jContents['project']['modules'] as $projectValue) {
-			// Checl to see if it is a image module
+			// Check to see if it is a image module
 			if ($projectValue['type'] === 'image') {
 				$url = $projectValue['sizes']['original'];
 				$tmp = download_url( $url );
-				$file_array = array(
-						'name' => basename( $url ),
-						'tmp_name' => $tmp
-				);
+				$desc = $project_name . ' ' . $modules_index;
+				$file_array = array();
+
+				// fix file filename for query strings
+				preg_match('/[^\?]+\.(jpg|jpe|jpeg|gif|png)/i', $url, $matches);
+				$file_array['name'] = basename($matches[0]);
+				$file_array['tmp_name'] = $tmp;
+				// $file_array = array(
+				// 		'name' => basename( $url ),
+				// 		'tmp_name' => $tmp
+				// );
 
 				// Check for download errors
 				if ( is_wp_error( $tmp ) ) {
@@ -151,7 +165,7 @@ function wp_behance_importer_ajax() {
 						return $tmp;
 				}
 
-				$imageId = media_handle_sideload( $file_array, $post_id );
+				$imageId = media_handle_sideload( $file_array, $post_id, $desc );
 				// Check for handle sideload errors.
 				if ( is_wp_error( $imageId ) ) {
 						@unlink( $file_array['tmp_name'] );
@@ -164,11 +178,13 @@ function wp_behance_importer_ajax() {
 				$imageId = media_handle_upload( $projectValue['sizes']['original'], $post_id );
 				// $imageSrc = wp_get_attachment_image_src( $imageId );
 
-				$value[] = array("field_54484eaa63685" => $imageId, "acf_fc_layout" => "imagem");
+				// $value[] = array("field_54484eaa63685" => $imageId, "acf_fc_layout" => "imagem");
 			}
+
+			$modules_index++;
 		}
 
-		update_field( $field_key, $value, $post_id );
+		// update_field( $field_key, $value, $post_id );
 		// update_option( 'behance_imported', $imported );
 
 		// print_r($imported);

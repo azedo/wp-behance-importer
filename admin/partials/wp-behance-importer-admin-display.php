@@ -147,9 +147,40 @@
 						<p class="required-field"><?php if ($notSetYet === true) { echo 'This is a required field!'; } ?></p>
 					</td>
 				</tr>
+
+				<tr valign="top">
+					<th scope="row">
+						<?php _e('Post type', 'wp-behance-importer'); ?>: <span class="required-field">*</span>
+						<small><?php _e("The post type that you wish to import the projects to (default is post, but you may have something different, like portfolio or jobs).", 'wp-behance-importer'); ?></small>
+					</th>
+					<td>
+						<select name="wpbi_post_type">
+							<?php
+								$wpbi_current_post_type = get_option('wpbi_post_type');
+
+								foreach ( get_post_types( '', 'names' ) as $post_type ) {
+									$obj = get_post_type_object( $post_type );
+
+									if ($wpbi_current_post_type == $post_type) {
+										echo '<option value="' . $post_type . '" selected>' . $obj->labels->singular_name . '</option>';
+									} else {
+										echo '<option value="' . $post_type . '">' . $obj->labels->singular_name . '</option>';
+									}
+								}
+							?>
+						</select>
+					</td>
+				</tr>
 			</table>
 
 			<?php submit_button(); ?>
+
+			<?php
+				$post_types = get_post_types();
+
+				// print_r($post_types);
+				echo $wpbi_current_post_type;
+			?>
 		</form>
 	</div><!-- /#settings -->
 
