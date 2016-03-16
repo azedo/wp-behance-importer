@@ -77,22 +77,22 @@ run_wp_behance_importer();
 /**
  * Add the plugin to the menu
  */
-add_action('admin_menu', 'wp_behance_importer_menu');
 function wp_behance_importer_menu() {
 	add_menu_page('WP Behance Importer', 'WP Behance Importer', 'administrator', 'wp-behance-importer', 'register_wp_behance_importer_admin', 'dashicons-download');
 
 	add_action( 'admin_init', 'register_wp_behance_importer_settings' );
 }
+add_action('admin_menu', 'wp_behance_importer_menu');
 
 /**
  * Register the admin fields
  */
 function register_wp_behance_importer_settings() {
-	register_setting( 'wp-behance-importer-settings-group', 'behance_api_key' );
-	register_setting( 'wp-behance-importer-settings-group', 'behance_start_page' );
-	register_setting( 'wp-behance-importer-settings-group', 'behance_results_per_page' );
-	register_setting( 'wp-behance-importer-settings-group', 'behance_user' );
-	register_setting( 'wp-behance-importer-settings-group', 'behance_json' );
+	register_setting( 'wp-behance-importer-settings-group', 'wpbi_api_key' );
+	register_setting( 'wp-behance-importer-settings-group', 'wpbi_start_page' );
+	register_setting( 'wp-behance-importer-settings-group', 'wpbi_results_per_page' );
+	register_setting( 'wp-behance-importer-settings-group', 'wpbi_user' );
+	register_setting( 'wp-behance-importer-settings-group', 'wpbi_json' );
 	register_setting( 'wp-behance-importer-settings-group', 'wpbi_post_type' );
 	// register_setting( 'wp-behance-importer-settings-group', 'behance_imported' );
 }
@@ -101,11 +101,10 @@ function register_wp_behance_importer_admin() {
 	require 'admin/partials/wp-behance-importer-admin-display.php';
 }
 
-add_action('wp_ajax_wp_behance_importer_ajax', 'wp_behance_importer_ajax');
-
 function wp_behance_importer_ajax() {
 
-	// if ( !wp_verify_nonce( $_POST['nonce'], "wp_behance_importer_nonce")) {
+	// @todo check why this nonce is not working properly
+	// if ( !wp_verify_nonce( $_POST['wpBehanceImporterNonce'], "wp_behance_importer_nonce")) {
 	// 	exit("No naughty business please");
 	// }
 
@@ -192,3 +191,12 @@ function wp_behance_importer_ajax() {
 
 	wp_die();
 }
+add_action('wp_ajax_wp_behance_importer_ajax', 'wp_behance_importer_ajax');
+
+function wp_behance_save_json_ajax() {
+	$option_name	= 'wpbi_json' ;
+	$new_value		= $_POST['jsonToDb'];
+
+	update_option( $option_name, $new_value );
+}
+add_action('wp_ajax_wp_behance_save_json_ajax', 'wp_behance_save_json_ajax');
