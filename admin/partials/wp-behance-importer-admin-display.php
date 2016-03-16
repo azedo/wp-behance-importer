@@ -15,13 +15,13 @@
 
 <!-- Save the config info in a variable for js use -->
 <script type="text/javascript">
-	var apiKey		= "<?php echo esc_attr( get_option('behance_api_key') ); ?>",
-			page			=	<?php echo esc_attr( get_option('behance_start_page') ); ?>,
-			perPage		=	<?php echo esc_attr( get_option('behance_results_per_page') ); ?>,
-			bhUser		=	"<?php echo esc_attr( get_option('behance_user') ); ?>",
+	var apiKey		= "<?php echo esc_attr( get_option('wpbi_api_key') ); ?>",
+			page			=	<?php echo esc_attr( get_option('wpbi_start_page') ); ?>,
+			perPage		=	<?php echo esc_attr( get_option('wpbi_results_per_page') ); ?>,
+			bhUser		=	"<?php echo esc_attr( get_option('wpbi_user') ); ?>",
 			jsonDB		=	localStorage.getItem('json'),
 			pluginUrl	=	"<?php echo plugins_url(); ?>/wp-behance-importer/",
-			importedP	=	<?php echo json_encode(get_option('behance_imported')); ?>;
+			importedP	=	<?php echo json_encode(get_option('wpbi_imported_projects')); ?>;
 </script>
 
 <!-- This file should primarily consist of HTML with a little bit of PHP. -->
@@ -37,7 +37,7 @@
 	<!-- Configuration warning -->
 	<?php
 		$notSetYet = false;
-		if (get_option('behance_api_key') === '' || empty(get_option('behance_api_key')) || get_option('behance_user') === '' || empty(get_option('behance_user'))) { $notSetYet = true; ?>
+		if (get_option('wpbi_api_key') === '' || empty(get_option('wpbi_api_key')) || get_option('wpbi_user') === '' || empty(get_option('wpbi_user'))) { $notSetYet = true; ?>
 		<div id="message" style="margin-top: 15px;">
 			<p><?php _e('You need to configure the plugin. Go to <a href="#" class="error-settings" data-div-name="settings-tab">settings</a> and fill the necessary fields.', 'wp-behance-importer'); ?></p>
 		</div>
@@ -46,7 +46,7 @@
 	<form id="behanceJson" action="#" method="post" style="display: none;">
 		<?php settings_fields( 'wp-behance-importer-settings-group' ); ?>
 		<?php do_settings_sections( 'wp-behance-importer-settings-group' ); ?>
-		<input type="hidden" name="behance_json" value='<?php echo esc_attr( get_option('behance_json') ); ?>'>
+		<input type="hidden" name="wpbi_json" value='<?php echo esc_attr( get_option('wpbi_json') ); ?>'>
 	</form>
 
 	<div id="import-tab" class="content-tab">
@@ -112,7 +112,7 @@
 						</small>
 					</th>
 					<td>
-						<input type="text" name="behance_api_key" value="<?php echo esc_attr( get_option('behance_api_key') ); ?>" style="width: 50%;" <?php if ($notSetYet === true) { echo 'class="input-error"'; } ?> />
+						<input type="text" name="wpbi_api_key" value="<?php echo esc_attr( get_option('wpbi_api_key') ); ?>" style="width: 50%;" <?php if ($notSetYet === true) { echo 'class="input-error"'; } ?> />
 						<p class="required-field"><?php if ($notSetYet === true) { echo 'This is a required field!'; } ?></p>
 					</td>
 				</tr>
@@ -123,7 +123,7 @@
 						<small>The start page of the query, default to 1. Unless you know what you are doing, keep this number at 1.</small>
 					</th>
 					<td>
-						<input type="number" name="behance_start_page" min="1" value="<?php echo esc_attr( get_option('behance_start_page', '1') ); ?>" style="width: 10%;" />
+						<input type="number" name="wpbi_start_page" min="1" value="<?php echo esc_attr( get_option('wpbi_start_page', '1') ); ?>" style="width: 10%;" />
 					</td>
 				</tr>
 
@@ -133,7 +133,7 @@
 						<small><?php _e("The number of results per page, default to 25 (max). The smaller the number, the more API requests you are making, so it's recommended to keep this number at 25.", 'wp-behance-importer'); ?></small>
 					</th>
 					<td>
-						<input type="number" name="behance_results_per_page" min="1" max="25" value="<?php echo esc_attr( get_option('behance_results_per_page', '25') ); ?>" style="width: 10%;" />
+						<input type="number" name="wpbi_results_per_page" min="1" max="25" value="<?php echo esc_attr( get_option('wpbi_results_per_page', '25') ); ?>" style="width: 10%;" />
 					</td>
 				</tr>
 
@@ -143,7 +143,7 @@
 						<small><?php _e("The Behance user name that you want to get your projects from (make sure that you are importing your own work or someone else's with their permission!!).", 'wp-behance-importer'); ?></small>
 					</th>
 					<td>
-						<input type="text" name="behance_user" value="<?php echo esc_attr( get_option('behance_user') ); ?>" style="width: 50%;" <?php if ($notSetYet === true) { echo 'class="input-error"'; } ?> />
+						<input type="text" name="wpbi_user" value="<?php echo esc_attr( get_option('wpbi_user') ); ?>" style="width: 50%;" <?php if ($notSetYet === true) { echo 'class="input-error"'; } ?> />
 						<p class="required-field"><?php if ($notSetYet === true) { echo 'This is a required field!'; } ?></p>
 					</td>
 				</tr>
@@ -179,7 +179,9 @@
 				$post_types = get_post_types();
 
 				// print_r($post_types);
-				echo $wpbi_current_post_type;
+				// echo $wpbi_current_post_type;
+				// echo "<br />";
+				// echo get_option('wpbi_json');
 			?>
 		</form>
 	</div><!-- /#settings -->
