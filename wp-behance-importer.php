@@ -120,12 +120,19 @@ function wp_behance_importer_ajax() {
 		$json = wp_remote_retrieve_body($jsonurl);
 		$jContents = json_decode($json, true);
 
-		$project_name = $jContents['project']['name'];
+		$project_name	= $jContents['project']['name'];
+
+		if ($jContents['project']['description'] != null) {
+			$project_desc = $jContents['project']['description'];
+		} else {
+			$project_desc = '';
+		}
+		// $project_desc	= '';
 
 		// @todo Check if the id is not saved already in the database or check if the title already exists then kill the loop
 		$new_post = array(
 			'post_title' => $jdb[$i]['name'],
-			'post_content' => $jContents['project']['description'],
+			'post_content' => $project_desc,
 			'post_status' => 'draft',
 			'post_date' => date('Y-m-d H:i:s'),
 			'post_author' => $user_ID,
