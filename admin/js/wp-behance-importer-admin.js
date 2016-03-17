@@ -1,34 +1,6 @@
 (function( $ ) {
 	'use strict';
 
-	/**
-	 * All of the code for your admin-specific JavaScript source
-	 * should reside in this file.
-	 *
-	 * Note that this assume you're going to use jQuery, so it prepares
-	 * the $ function reference to be used within the scope of this
-	 * function.
-	 *
-	 * From here, you're able to define handlers for when the DOM is
-	 * ready:
-	 *
-	 * $(function() {
-	 *
-	 * });
-	 *
-	 * Or when the window is loaded:
-	 *
-	 * $( window ).load(function() {
-	 *
-	 * });
-	 *
-	 * ...and so on.
-	 *
-	 * Remember that ideally, we should not attach any more than a single DOM-ready or window-load handler
-	 * for any particular page. Though other scripts in WordPress core, other plugins, and other themes may
-	 * be doing this, we should try to minimize doing that in our own work.
-	 */
-	
 	$(function() {
 		// If it has something saved, show it's info
 		storeInfo();
@@ -36,9 +8,10 @@
 		// Buttons actions
 		/// Navigation
 		//// Tabs
-		//// TODO: Add the hash to the url for better UX
 		$('.nav-tab-wrapper').on('click', '.nav-tab', function(e) {
 			e.preventDefault();
+
+			// @todo Add a hash to the url for better UX
 
 			var $this				= $(this),
 					divName			=	$this.data('div-name'),
@@ -74,22 +47,23 @@
 			e.preventDefault();
 
 			$(this).attr('disabled', true).text(wpbi.string_0);
-			
+
 			localStorage.clear();
-			
+
 			window.location.href=window.location.href;
 		});
 		//// Display
 		//// Show results [all, today, date]
 		$('#config-controls button').on('click', function(e){
 			e.preventDefault();
-			
+
 			var $this = $(this),
-					btnId	=	$this.attr('id');
-			
+					btnId	=	$this.attr('id'),
+					now;
+
 			if (btnId === 'import-date') {
 				$this.parent().next().fadeIn();
-				
+
 				/// Make the clicked button active
 				$($this)
 					.addClass('active')
@@ -100,37 +74,37 @@
 				$('#config-controls')
 					.find('button')
 					.attr('disabled', true);
-				
+
 				$('#config-controls').on('click', '#results-date', function(e) {
 					e.preventDefault();
-					
+
 					var now					= new Date($('#date-input').val()),
 							startOfDay	= new Date(now.getFullYear(), now.getMonth(), now.getDate()),
 							timestamp		= startOfDay / 1000;
-					
+
 					doAjaxRequest($this, btnId, timestamp);
 				});
 			} else if (btnId === 'import-today') {
-				var now					= new Date(),
-						startOfDay	= new Date(now.getFullYear(), now.getMonth(), now.getDate()),
+				now	= new Date();
+			} else if (btnId === 'import-all') {
+				now	= new Date(0);
+			}
+
+			if (btnId === 'import-today' || btnId === 'import-all') {
+				var startOfDay	= new Date(now.getFullYear(), now.getMonth(), now.getDate()),
 						timestamp		= startOfDay / 1000;
-				
-				doAjaxRequest($this, btnId, timestamp);
-			} if (btnId === 'import-all') {
-				var now					= new Date(0),
-						startOfDay	= new Date(now.getFullYear(), now.getMonth(), now.getDate()),
-						timestamp		= startOfDay / 1000;
-				
+
 				doAjaxRequest($this, btnId, timestamp);
 			}
 		});
 		//// Close the date picker field
-		$('#close-date').on('click', function(e) {e.preventDefault();
-			
+		$('#close-date').on('click', function(e) {
+			e.preventDefault();
+
 			resetResults();
-			
+
 			var $this = $(this);
-			
+
 			$this.parent().fadeOut(function() {
 				/// Make the clicked button active
 				$('#config-controls')
@@ -155,6 +129,7 @@
 					jsonArr			= JSON.parse(jsonDB),
 					$this				= $(this);
 
+			// Push all the selected projects to an array
 			$(selected).each(function () {
 				if (this.checked) {
 					var selectedItem = $(this).val();
@@ -164,6 +139,7 @@
 				}
 			});
 
+			// Get the ID of the selected projects and save in another array
 			for (var i = 0; i < jsonArr.length; i++) {
 				for (var k = 0; k < selectedArr.length; k++) {
 					if (jsonArr[i].id === Number(selectedArr[k])) {
@@ -172,6 +148,7 @@
 				}
 			}
 
+			// Variables for the ajax request
 			var jDB		=	resultArr,
 					nonce	=	$('input[name="wpBehanceImporterNonce"]').val(),
 					data = {
@@ -181,32 +158,12 @@
 						'myNonce': nonce
 					};
 
+			// The ajax request for importing the data
 			$.ajax({
-				// xhr: function()
-				// {
-				// 	var xhr = new window.XMLHttpRequest();
-				// 	//Upload progress
-				// 	xhr.upload.addEventListener("progress", function(evt){
-				// 		if (evt.lengthComputable) {
-				// 			var percentComplete = evt.loaded / evt.total;
-				// 			//Do something with upload progress
-				// 			console.log(percentComplete);
-				// 		}
-				// 	}, false);
-				// 	//Download progress
-				// 	xhr.addEventListener("progress", function(evt){
-				// 		if (evt.lengthComputable) {
-				// 			var percentComplete = evt.loaded / evt.total;
-				// 			//Do something with download progress
-				// 			console.log(percentComplete);
-				// 		}
-				// 	}, false);
-				// 	return xhr;
-				// },
 				type: 'POST',
 				url: wpbi.wpbiAjax,
 				data: data,
-				beforeSend: function() {
+				beforeSend: function() { // Before importing do the following
 					$this.text(wpbi.string_0).attr('disabled', true);
 					$('#reset-results').attr('disabled', true);
 
@@ -219,7 +176,7 @@
 						$(this).find('h3').find('b:last-of-type').text($('input[name="projectsTotal"]').val());
 					});
 				},
-				success: function(data){
+				success: function(data) { // After everything is imported, do the following
 					$this.text('Importar').attr('disabled', false);
 					$('#reset-results').attr('disabled', false);
 
@@ -228,28 +185,39 @@
 					});
 
 					console.log('Got this from the server: ' + data);
+				},
+				error: function (errorImport) {
+					alert('Something went wrong, check the console.');
+					console.log(errorImport);
 				}
 			});
-			
-			// Use for debug
-			// $.post(ajax.url, data, function(response) {
-			// 	console.log('Got this from the server: ' + response);
-			// });
 		});
 		//// Reset results
 		$('#results').on('click', '#reset-results', function(e) {
 			e.preventDefault();
-			//// Fade the results out
+			// @todo Find out why the reset is not working properly
 			resetResults();
 		});
-
+		//// Check all checkbox (don't select the already imported - disabled - ones)
 		$('#results').on('change', 'input[name="check-all"]', function() {
 			$('#results input:checkbox').not(this).not('input:disabled').prop('checked', this.checked);
-		});
 
+			clearBtn();
+		});
+		$('#results').on('change', '.add', function() {
+			clearBtn();
+		});
+		//// Check the clicked project
 		$('#results').on('click', '.add', function() {
 			$("#check-all input[type='checkbox']").prop('checked', false);
-			console.log('mudou');
+			$('#uncheck-all').fadeIn('300');
+		});
+		//// Remove all the selections
+		$('#results').on('click', '.remove-selections', function() {
+			$('#results input:checkbox').not(this).not('input:disabled').prop('checked', false);
+			$('#uncheck-all').fadeOut('300');
+
+			return false;
 		});
 	});
 
@@ -257,8 +225,19 @@
 	 * Functions
 	 */
 
+	// Show or hide clear button
+	function clearBtn() {
+		if ($("#results input:checkbox:checked").length > 0) {
+			$('#uncheck-all').fadeIn('300');
+			console.log('one or more selected');
+		} else {
+			$('#uncheck-all').fadeOut('300');
+			console.log('none selected');
+		}
+	}
+
+	// @todo Put this file in db for better multi-user support
 	// Shows info if file is stored in cache
-	// TODO: Put this file in db for better multi-user support
 	function storeInfo() {
 		if (localStorage.getItem('json')) {
 			var fileSize		= ((localStorage['json'].length * 2)/1024).toFixed(2)+" kb",
@@ -316,9 +295,9 @@
 	function showOnPage(dataArray, button, btnId, timestamp) {
 		// Change the text in the button
 		$(button).text(wpbi.string_22);
-		
+
 		var hideCount	=	0;
-		
+
 		if (localStorage.getItem('json')) {
 			// Add the storage info in the cache tab
 			/// Show the info
@@ -350,7 +329,6 @@
 					console.log(typeof id);
 
 					$('#results')
-						.delay(1500)
 						.append("<div id='" + id + "' class='animated " + animation + " result group'>" +
 											"<label for='" + id + "_l'>" +
 												"<img src='" + img + "'>" +
@@ -439,7 +417,10 @@
 										wpbi.string_16 + ': <b>' + hideCount + '</b>' +
 									'</div>' +
 									'<div id="check-all">' +
-										'<label for="wpbi_selectAll">' + wpbi.string_17 + ': <input type="checkbox" name="check-all" id="wpbi_selectAll" />' +
+										'<label for="wpbi_selectAll">' + wpbi.string_17 + ' <input type="checkbox" name="check-all" id="wpbi_selectAll" />' +
+									'</div>' +
+									'<div id="uncheck-all">' +
+										'<button class="remove-selections">' + wpbi.string_23 + ' <span class="dashicons dashicons-dismiss"></span></button>' +
 									'</div>' +
 								'</div>');
 			$('#results')
@@ -493,17 +474,28 @@
 					localStorage.setItem('json', JSON.stringify(newResults));
 
 					// Save JSON to DB
-					// $('#behanceJson input[name="behance_json"]').val(JSON.stringify(newResults));
+					$('#behanceJson input[name="wpbi_json"]').val(JSON.stringify(newResults));
 
-					// var jsonResult = $('#behanceJson').serialize();
+					var jsonResult = $('#behanceJson').serialize(),
+							dataJ = {
+								'action': 'wp_behance_save_json_ajax',
+								'jsonToDb': jsonResult
+							};
 
-					// $.post( pluginUrl + 'admin/save-json-db.php', jsonResult ).error(
-					// 	function(errorThrown) {
-					// 		alert('error');
-					// 		console.log(errorThrown);
-					// 	}).success( function() {
-					// 		console.log('Enviado!!');
-					// 	});
+					$.ajax({
+						type: 'POST',
+						url: wpbi.wpbiAjax,
+						data: dataJ,
+						success: function(data) {
+							console.log('Success saving the json!');
+							console.log('');
+							console.log('Got this from the server: ' + data);
+						},
+						error: function(errorJson) {
+							alert('error');
+							console.log('Couln\'t save the json on the db => '  + errorThrown);
+						}
+					});
 
 					showOnPage(newResults, button, btnId, timestamp);
 				}
@@ -519,7 +511,7 @@
 	// The AJAX request to retrieve the JSON file
 	// TODO: Put the variables inside the db as well
 	function doAjaxRequest(button, btnId, timestamp) {
-		var url	= 'http://www.behance.net/v2/users/' + bhUser + '/projects?api_key=' + apiKey + '&per_page=' + perPage + '&page=' + page;
+		var url	= 'http://www.behance.net/v2/users/blclv/projects?api_key=' + apiKey + '&per_page=' + perPage + '&page=' + page;
 		
 		// Check if there's data in the localStorage
 		if (localStorage.getItem('json')) {
@@ -550,8 +542,8 @@
 
 			/// Do the first ajax request
 			$.ajax({
-				url: wpbi.wpbiAjax,
-				data:{
+				url: url,
+				data: {
 					'action':'do_ajax'
 				},
 				dataType: 'JSONP',
@@ -579,17 +571,30 @@
 						localStorage.setItem('json', JSON.stringify(results));
 
 						// Save JSON to DB
-						// $('#behanceJson input[name="behance_json"]').val(results);
+						$('#behanceJson input[name="wpbi_json"]').val(results);
 
-						// var jsonResult = $('#behanceJson').serialize();
+						var jsonResult = $('#behanceJson').serialize();
 
-						// $.post( 'save-json-db.php', jsonResult ).error(
-						// 	function(errorThrown) {
-						// 		alert('error');
-						// 		console.log(errorThrown);
-						// 	}).success( function() {
-						// 		console.log('Enviado!!');
-						// 	});
+						var jsonResult = $('#behanceJson').serialize(),
+								dataJ = {
+									'action': 'wp_behance_save_json_ajax',
+									'jsonToDb': jsonResult
+								};
+
+						$.ajax({
+							type: 'POST',
+							url: wpbi.wpbiAjax,
+							data: dataJ,
+							success: function(data) {
+								console.log('Success saving the json!');
+								console.log('');
+								console.log('Got this from the server: ' + data);
+							},
+							error: function(errorJson) {
+								alert('error');
+								console.log('Couln\'t save the json on the db => '  + errorThrown);
+							}
+						});
 					}
 				},
 				error: function(errorThrown) {
@@ -605,22 +610,22 @@
 		$('#settings-form').submit( function () {
 			console.log('Antes de enviar!');
 
-			if(!$('input[name="behance_api_key"]').val() && $('input[name="behance_user"]').val()) {
-				$('input[name="behance_api_key"]').css('border', '1px solid red').next().text(wpbi.string_18);
-				$('input[name="behance_user"]').css('border', '1px solid #ddd').next().text('');
-			} else if (!$('input[name="behance_user"]').val() && $('input[name="behance_api_key"]').val()) {
-				$('input[name="behance_user"]').css('border', '1px solid red').next().html(wpbi.string_19);
-				$('input[name="behance_api_key"]').css('border', '1px solid #ddd').next().text('');
-			} else if (!$('input[name="behance_user"]').val() || !$('input[name="behance_api_key"]').val()) {
-				$('input[name="behance_user"]').css('border', '1px solid red').next().text(wpbi.string_19);
-				$('input[name="behance_api_key"]').css('border', '1px solid red').next().text(wpbi.string_18);
+			if(!$('input[name="wpbi_api_key"]').val() && $('input[name="wpbi_user"]').val()) {
+				$('input[name="wpbi_api_key"]').css('border', '1px solid red').next().text(wpbi.string_18);
+				$('input[name="wpbi_user"]').css('border', '1px solid #ddd').next().text('');
+			} else if (!$('input[name="wpbi_user"]').val() && $('input[name="wpbi_api_key"]').val()) {
+				$('input[name="wpbi_user"]').css('border', '1px solid red').next().html(wpbi.string_19);
+				$('input[name="wpbi_api_key"]').css('border', '1px solid #ddd').next().text('');
+			} else if (!$('input[name="wpbi_user"]').val() || !$('input[name="wpbi_api_key"]').val()) {
+				$('input[name="wpbi_user"]').css('border', '1px solid red').next().text(wpbi.string_19);
+				$('input[name="wpbi_api_key"]').css('border', '1px solid red').next().text(wpbi.string_18);
 			} else {
 				console.log(wpbi.string_21);
 
 				$('#settings-tab .submit').append('<span style="position: relative;"><img src="/wp-admin/images/spinner.gif" alt="" class="slider-spinner general-spinner" style="position: absolute; top: 4px; left: 5px;"></span>');
 				$('#settings-tab .submit input').val(wpbi.string_21).addClass('active').attr('disabled', true);
 
-				$('input[name="behance_api_key"], input[name="behance_user"]').attr('style', '').css({
+				$('input[name="wpbi_api_key"], input[name="wpbi_user"]').attr('style', '').css({
 					border: 'border: 1px solid #ddd',
 					width: '50%'
 				});

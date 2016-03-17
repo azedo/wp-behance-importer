@@ -82,9 +82,28 @@ small {
 	float: left;
 }
 
-#check-all {
+#check-all,
+#uncheck-all {
 	padding: 10px;
 	float: right;
+}
+#uncheck-all {
+	display: none;
+}
+#uncheck-all button {
+	background: transparent;
+	border: none;
+	padding: 0;
+	cursor: pointer;
+}
+#uncheck-all button:hover span {
+	color: red;
+}
+#uncheck-all span {
+	font-size: 15px;
+	display: inline-block;
+	position: relative;
+	top: 3px;
 }
 
 #results .result {

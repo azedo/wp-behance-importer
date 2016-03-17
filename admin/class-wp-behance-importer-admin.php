@@ -126,7 +126,8 @@ class Wp_Behance_Importer_Admin {
 			'string_19' => __( 'You need to put an username!', 'wp-behance-importer' ),
 			'string_20' => __( 'Save', 'wp-behance-importer' ),
 			'string_21' => __( 'Sending...', 'wp-behance-importer' ),
-			'string_22' => __( 'Done!', 'wp-behance-importer' )
+			'string_22' => __( 'Done!', 'wp-behance-importer' ),
+			'string_23' => __( 'Clear', 'wp-behance-importer' )
 		);
 		wp_localize_script( $this->plugin_name, 'wpbi', $translation_array );
 		// <script> alert( object_name.some_string ); </script>
