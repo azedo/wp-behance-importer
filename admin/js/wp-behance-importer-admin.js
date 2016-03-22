@@ -458,7 +458,7 @@
 			
 			/// Do the first ajax request
 			$.ajax({
-			url: 'http://www.behance.net/v2/users/blclv/projects?api_key=' + apiKey + '&per_page=' + perPage + '&page=' + nextPage,
+			url: 'http://www.behance.net/v2/users/' + bhUser + '/projects?api_key=' + apiKey + '&per_page=' + perPage + '&page=' + nextPage,
 			data:{
 				'action':'do_ajax'
 			},
@@ -511,7 +511,7 @@
 	// The AJAX request to retrieve the JSON file
 	// TODO: Put the variables inside the db as well
 	function doAjaxRequest(button, btnId, timestamp) {
-		var url	= 'http://www.behance.net/v2/users/blclv/projects?api_key=' + apiKey + '&per_page=' + perPage + '&page=' + page;
+		var url	= 'http://www.behance.net/v2/users/' + bhUser + '/projects?api_key=' + apiKey + '&per_page=' + perPage + '&page=' + page;
 		
 		// Check if there's data in the localStorage
 		if (localStorage.getItem('json')) {
