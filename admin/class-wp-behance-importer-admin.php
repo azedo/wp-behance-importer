@@ -59,7 +59,12 @@ class Wp_Behance_Importer_Admin {
 	 *
 	 * @since    0.5.0
 	 */
-	public function enqueue_styles() {
+	public function enqueue_styles($hook) {
+
+		global $wpss_settings_page;
+
+		if( $hook != $wpss_settings_page )
+			return;
 
 		/**
 		 * This function is provided for demonstration purposes only.
@@ -84,7 +89,12 @@ class Wp_Behance_Importer_Admin {
 	 *
 	 * @since    0.5.0
 	 */
-	public function enqueue_scripts() {
+	public function enqueue_scripts($hook) {
+
+		global $wpbi_settings_page;
+
+		if( $hook != $wpbi_settings_page )
+			return;
 
 		/**
 		 * This function is provided for demonstration purposes only.

@@ -78,7 +78,9 @@ run_wp_behance_importer();
  * Add the plugin to the menu
  */
 function wp_behance_importer_menu() {
-	add_menu_page('WP Behance Importer', 'WP Behance Importer', 'administrator', 'wp-behance-importer', 'register_wp_behance_importer_admin', 'dashicons-download');
+	global $wpbi_settings_page;
+
+	$wpbi_settings_page = add_menu_page('WP Behance Importer', 'WP Behance Importer', 'administrator', 'wp-behance-importer', 'register_wp_behance_importer_admin', 'dashicons-download');
 
 	add_action( 'admin_init', 'register_wp_behance_importer_settings' );
 }
