@@ -14,7 +14,7 @@ var stylish = require('jshint-stylish'); // Display the errors in a better way
 gulp.task('lint', function() {
 	return gulp.src('./admin/js/wp-behance-importer-admin.js')
 		.pipe(jshint())
-		.pipe(jshint.reporter('jshint-stylish'))
+		.pipe(jshint.reporter(stylish))
 		.pipe(jshint.reporter('fail'));
 });
 
@@ -41,7 +41,7 @@ gulp.task('scripts', function() {
 
 // Watch Files For Changes
 gulp.task('watch', function() {
-	gulp.watch('./admin/js/*.js', ['scripts']);
+	gulp.watch('./admin/js/*.js', ['lint', 'scripts']);
 	gulp.watch('./admin/css/*.styl', ['stylus']);
 });
 
