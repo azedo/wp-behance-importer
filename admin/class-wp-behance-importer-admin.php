@@ -81,7 +81,7 @@ class Wp_Behance_Importer_Admin {
 		// Animate.css
 		wp_enqueue_style( $this->plugin_name . '-animatecss', plugin_dir_url( __FILE__ ) . 'css/animate.min.css', array(), '3.3.0', 'all' );
 		// Plugin Styles
-		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/wp-behance-importer-admin.min.css', array(), $this->version, 'all' );
+		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/min/wp-behance-importer-admin.min.css', array(), $this->version, 'all' );
 	}
 
 	/**
@@ -108,7 +108,7 @@ class Wp_Behance_Importer_Admin {
 		 * class.
 		 */
 
-		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/wp-behance-importer-admin.min.js', array( 'jquery' ), $this->version, true );
+		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/min/wp-behance-importer-admin.min.js', array( 'jquery' ), $this->version, true );
 		// wp_enqueue_script( $this->plugin_name . '-momentjs', plugins_url( 'bower_components/momentjs/min/moment.min.js', dirname(__FILE__) ), array( 'jquery' ), $this->version, true );
 
 		// Localize the script
