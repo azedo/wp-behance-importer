@@ -95,6 +95,7 @@ function register_wp_behance_importer_settings() {
 	register_setting( 'wp-behance-importer-settings-group', 'wpbi_results_per_page' );
 	register_setting( 'wp-behance-importer-settings-group', 'wpbi_user' );
 	register_setting( 'wp-behance-importer-settings-group', 'wpbi_json' );
+	register_setting( 'wp-behance-importer-settings-group', 'wpbi_jsonDate' );
 	register_setting( 'wp-behance-importer-settings-group', 'wpbi_post_type' );
 	register_setting( 'wp-behance-importer-settings-group', 'wpbi_imported_projects' );
 }
@@ -203,9 +204,12 @@ function wp_behance_importer_ajax() {
 add_action('wp_ajax_wp_behance_importer_ajax', 'wp_behance_importer_ajax');
 
 function wp_behance_save_json_ajax() {
-	$option_name	= 'wpbi_json' ;
-	$new_value		= $_POST['jsonToDb'];
+	$wpbi_json					= 'wpbi_json';
+	$wpbi_json_val			= $_POST['jsonToDb'];
+	$wpbi_jsonDate			= 'wpbi_jsonDate';
+	$wpbi_jsonDate_val	= $_POST['jsonDateToDb'];
 
-	update_option( $option_name, $new_value );
+	update_option( $wpbi_json, $wpbi_json_val );
+	update_option( $wpbi_jsonDate, $wpbi_jsonDate_val );
 }
 add_action('wp_ajax_wp_behance_save_json_ajax', 'wp_behance_save_json_ajax');

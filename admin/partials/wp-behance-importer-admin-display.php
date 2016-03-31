@@ -16,12 +16,17 @@
 <!-- Save the config info in a variable for js use -->
 <script type="text/javascript">
 	var apiKey		= "<?php echo esc_attr( get_option('wpbi_api_key') ); ?>",
-			page			=	<?php echo esc_attr( get_option('wpbi_start_page') ); ?>,
-			perPage		=	<?php echo esc_attr( get_option('wpbi_results_per_page') ); ?>,
-			bhUser		=	"<?php echo esc_attr( get_option('wpbi_user') ); ?>",
-			jsonDB		=	localStorage.getItem('json'),
-			pluginUrl	=	"<?php echo plugins_url(); ?>/wp-behance-importer/",
-			importedP	=	<?php echo json_encode(get_option('wpbi_imported_projects')); ?>;
+			page			= <?php echo esc_attr( get_option('wpbi_start_page') ); ?>,
+			perPage		= <?php echo esc_attr( get_option('wpbi_results_per_page') ); ?>,
+			bhUser		= "<?php echo esc_attr( get_option('wpbi_user') ); ?>",
+			jsonIsDBt	= "<?php if (get_option('wpbi_json')) { echo "true"; } else { echo "false"; } ?>",
+			jsonIsLSt	= (localStorage.getItem('wpbi_json')) ? true : false,
+			jsonDBt		= "<?php if (get_option('wpbi_json')) { echo get_option('wpbi_json'); } else { echo "false"; } ?>",
+			jsonDB		= (jsonDBt !== "false") ? jsonDBt : localStorage.getItem('wpbi_json'),
+			jsonDatet	= "<?php if (get_option('wpbi_jsonDate')) { echo get_option('wpbi_jsonDate'); } else { echo "false"; } ?>",
+			jsonDate	= (jsonDatet !== "false") ? jsonDatet : (new Date()),
+			pluginUrl	= "<?php echo plugins_url(); ?>/wp-behance-importer/",
+			importedP	= <?php echo json_encode(get_option('wpbi_imported_projects')); ?>;
 </script>
 
 <!-- This file should primarily consist of HTML with a little bit of PHP. -->
@@ -46,7 +51,10 @@
 	<form id="behanceJson" action="#" method="post" style="display: none;">
 		<?php settings_fields( 'wp-behance-importer-settings-group' ); ?>
 		<?php do_settings_sections( 'wp-behance-importer-settings-group' ); ?>
-		<input type="hidden" name="wpbi_json" value='<?php echo esc_attr( get_option('wpbi_json') ); ?>'>
+		<div id="wpbi_json_fields">
+			<input type="hidden" name="wpbi_json" value="<?php if (get_option('wpbi_json')) { echo get_option('wpbi_json'); } ?>">
+			<input type="hidden" name="wpbi_jsonDate" value="<?php if (get_option('wpbi_jsonDate')) { echo get_option('wpbi_jsonDate'); } ?>">
+		</div>
 	</form>
 
 	<div id="import-tab" class="content-tab">

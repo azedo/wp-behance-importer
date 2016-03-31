@@ -137,7 +137,11 @@ class Wp_Behance_Importer_Admin {
 			'string_20' => __( 'Save', 'wp-behance-importer' ),
 			'string_21' => __( 'Sending...', 'wp-behance-importer' ),
 			'string_22' => __( 'Done!', 'wp-behance-importer' ),
-			'string_23' => __( 'Clear', 'wp-behance-importer' )
+			'string_23' => __( 'Clear', 'wp-behance-importer' ),
+			'string_24' => __( 'Is it stored in the database?', 'wp-behance-importer' ),
+			'string_25' => __( 'Is it stored in localStorage?', 'wp-behance-importer' ),
+			'string_26' => __( 'Yes', 'wp-behance-importer' ),
+			'string_27' => __( 'No', 'wp-behance-importer' )
 		);
 		wp_localize_script( $this->plugin_name, 'wpbi', $translation_array );
 		// <script> alert( object_name.some_string ); </script>
