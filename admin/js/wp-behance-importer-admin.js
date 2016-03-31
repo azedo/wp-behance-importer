@@ -1,3 +1,4 @@
+//! WP Behance Importer JS File
 (function( $ ) {
 	'use strict';
 
